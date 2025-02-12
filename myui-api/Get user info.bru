@@ -1,0 +1,22 @@
+meta {
+  name: Get user info
+  type: http
+  seq: 5
+}
+
+get {
+  url: http://localhost:1337/api/users/me
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNzM5MzY3Njc5LCJleHAiOjE3NDE5NTk2Nzl9.P1k73PIGamFaZDUd7RqXEH7x_cCaR38pvue6eG6X3Oc
+}
+
+body:json {
+  {
+    "identifier": "florian@anywwwhere.com",
+    "password": "123456!"
+  }
+}
