@@ -8,7 +8,7 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import type React from "react"
-import { login } from "@/app/(auth)/actions/auth"
+import { register } from "@/app/(auth)/actions/auth"
 import Link from "next/link"
 
 function SubmitButton() {
@@ -20,12 +20,14 @@ function SubmitButton() {
   )
 }
 
-export function LoginForm({
+export function RegisterForm({
   className,
   ...props
 }: React.ComponentPropsWithoutRef<"form">) {
-  const [state, formAction] = useActionState(login, null)
+  const [state, formAction] = useActionState(register, null)
   const router = useRouter()
+
+  console.log(state)
 
   useEffect(() => {
     if (state && state.success) {
@@ -40,9 +42,9 @@ export function LoginForm({
       {...props}
     >
       <div className="flex flex-col items-center gap-2 text-center">
-        <h1 className="text-2xl font-bold">Accédez à votre compte</h1>
+        <h1 className="text-2xl font-bold">Créer votre compte</h1>
         <p className="text-balance text-sm text-muted-foreground">
-          Entrez votre email ci-dessous pour vous connecter à votre compte
+          Entrez votre email ci-dessous pour créer votre compte
         </p>
       </div>
       <div className="grid gap-6">
@@ -50,10 +52,11 @@ export function LoginForm({
           <Label htmlFor="email">Email</Label>
           <Input
             id="email"
-            name="identifier"
-            type="email"
+            name="email"
+            type="string"
             placeholder="m@example.com"
             required
+            error={state?.errors}
           />
         </div>
         <div className="grid gap-2">
@@ -66,7 +69,13 @@ export function LoginForm({
               Mot de passe oublié ?
             </Link>
           </div>
-          <Input id="password" name="password" type="password" required />
+          <Input
+            id="password"
+            name="password"
+            type="password"
+            required
+            error={state?.errors}
+          />
         </div>
         <SubmitButton />
         {state && state.error && (
@@ -74,9 +83,9 @@ export function LoginForm({
         )}
       </div>
       <div className="text-center text-sm">
-        Vous n&apos;avez pas de compte ?{" "}
-        <Link href="/register" className="underline underline-offset-4">
-          S&apos;inscrire
+        Vous avez un compte ?{" "}
+        <Link href="/login" className="underline underline-offset-4">
+          Créer mon compte
         </Link>
       </div>
     </form>
